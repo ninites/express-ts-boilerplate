@@ -1,0 +1,18 @@
+version: '3.6'
+
+services:
+  express-ts-boilerplate:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+    volumes:
+      - './server:/app/server'
+      - '/app/server/node_modules'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - APP_CONTAINER_ROOT_PATH=/app/server
+    container_name: express-ts-boilerplate
+    restart: always
