@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && node /app/server/build/index.js"
+    "start": "tsc && node --inspect=0.0.0.0:9229 /app/server/build/index.js"
   },
   "author": "",
   "license": "ISC",
