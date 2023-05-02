@@ -13,7 +13,7 @@ class TestApi {
     this._app.get(`${ROUTE}/`, async (req, res) => {
       try {
         console.log('TEST API | TEST START');
-        const result = { success: true, message: 'TEST API | TEST START' };
+        const result = { success: true, message: 'TEST API SUCCESS' };
         res.send(result);
       } catch (error: any) {
         res.status(500).send(error.message);

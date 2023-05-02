@@ -9,22 +9,27 @@ import { TestApi } from './api/TestApi';
 const APP_CONTAINER_ROOT_PATH = process.env.APP_CONTAINER_ROOT_PATH;
 
 class Server {
-  server: express.Application;
+  _app: express.Application;
   constructor() {
-    this.server = express();
-    this.server.use(cors());
-    this.initRouting();
-    this.launch();
+    this._app = express();
+    this._app.use(cors());
+    this.initApp();
+    this.initServer();
   }
 
-  initRouting() {
-    new TestApi(this.server);
+  initApp() {
+    new TestApi(this._app);
   }
 
-  launch(): void {
+  initServer(): void {
+    if (process.env.NODE_ENV === 'test') {
+      return;
+    }
     const httpPort = process.env.HTTP_PORT || 8000;
+    http.createServer(this._app).listen(httpPort);
+    console.log('HTTP SERVER RUNNING on PORT' + httpPort);
     // const httpsPort = process.env.HTTPS_PORT || 8443;
-    
+
     // const privateKey = fs.readFileSync(
     //   `${APP_CONTAINER_ROOT_PATH}/cert/private.key`
     // );
@@ -42,9 +47,13 @@ class Server {
     //   )
     //   .listen(httpsPort);
     // console.log('HTTPS SERVER RUNNING on PORT' + httpsPort);
-    http.createServer(this.server).listen(httpPort);
-    console.log('HTTP SERVER RUNNING on PORT' + httpPort);
+  }
+
+  get app(): express.Application {
+    return this._app;
   }
 }
 
-new Server();
+const serverInstance = new Server();
+const app = serverInstance.app;
+export { app };

@@ -5,8 +5,8 @@
     "sourceMap": true,
     "outDir": "/app/server/build",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules"]
 }
